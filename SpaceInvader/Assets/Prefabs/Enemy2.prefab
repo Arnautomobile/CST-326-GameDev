@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -171,3 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0ea46904335df46b485856f1a58611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _missile: {fileID: 7862526653309311654, guid: ecb45a56cf94ce84293cd48b1e17bd95, type: 3}
+  _scorePoints: 20
+  _minFireTime: 10
+  _maxFireTime: 20

@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
         _direction = Input.GetAxis("Horizontal");
         _timer += Time.deltaTime;
 
+        if (Input.GetKeyDown(KeyCode.A)) {
+            _isAuto = !_isAuto;
+        }
+
         if (_isAuto) {
             if ((Input.GetButtonDown("Fire") || Input.GetButton("Fire")) && _timer > _fireRate) {
                 Fire(0);

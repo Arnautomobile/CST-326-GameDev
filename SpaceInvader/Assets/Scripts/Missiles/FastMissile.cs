@@ -2,27 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FastMissile : MissileScript
+public class FastMissile : BaseMissile
 {
-    private int _bounces = 1;
+    [SerializeField] private int _bounces;
 
-    public override void Setup(Vector2 direction, bool isEnemy)
+    protected override void Explode()
     {
-        _direction = direction;
-        _isEnemy = isEnemy;
-        _speed = _baseSpeed;
-    }
-
-    protected override void HitObject(GameObject hit)
-    {
-        Destroy(hit);
-
-        if (_bounces > 0 && hit.CompareTag("Defense")) {
+        if (_bounces > 0) {
             _direction = new Vector2(0, -_direction.y);
             transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, 1);
+            _speed *= 0.8f;
+            _bounces--;
         }
         else {
-            Destroy(gameObject);
+            base.Explode();
         }
     }
 }
