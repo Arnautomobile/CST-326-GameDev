@@ -24,22 +24,25 @@ public abstract class MissileScript : MonoBehaviour
     }
 
     public abstract void Setup(Vector2 direction, bool isEnemy);
-    protected abstract void HitObject(GameObject hit);
+    protected abstract void Explode();
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject hit = collider.gameObject;
+        
         if (hit.CompareTag("Player") && _isEnemy) {
-            Debug.Log("Hit player");
-            HitObject(hit);
+            GameManager.Instance.RemoveLife();
         }
         else if (hit.CompareTag("Enemy") && !_isEnemy) {
-            Debug.Log("Hit enemy");
-            HitObject(hit);
+            hit.GetComponent<EnemyShip>().Destroyed();
         }
         else if (hit.CompareTag("Defense")) {
-            Debug.Log("Hit defense");
-            HitObject(hit);
+            Destroy(hit);
         }
+        else {
+            return;
+        }
+
+        Explode();
     }
 }

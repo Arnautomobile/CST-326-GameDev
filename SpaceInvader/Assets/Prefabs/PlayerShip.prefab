@@ -177,7 +177,7 @@ MonoBehaviour:
   _edgeLeft: -13
   _edgeRight: 13
   _isAuto: 1
-  _fireRate: 0.2
+  _fireRate: 0.4
   _chargeTime: 1
   _overheatTime: 0
   _resetSpeed: 2

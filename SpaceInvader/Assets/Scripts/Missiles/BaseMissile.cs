@@ -11,9 +11,8 @@ public class BaseMissile : MissileScript
         _speed = _baseSpeed;
     }
 
-    protected override void HitObject(GameObject hit)
+    protected override void Explode()
     {
-        Destroy(hit);
         Destroy(gameObject);
     }
 }
