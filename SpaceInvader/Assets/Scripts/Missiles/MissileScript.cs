@@ -15,10 +15,10 @@ public abstract class MissileScript : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         _rigidbody.velocity = _direction * _speed;
-        if (_rigidbody.position.y > 15 || _rigidbody.position.y < -15) {
+        if (_rigidbody.position.y > 11 || _rigidbody.position.y < -11 || _rigidbody.position.x > 20 || _rigidbody.position.x < -20) {
             Destroy(gameObject);
         }
     }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7844220002640853118}
   - component: {fileID: 1608882432283939821}
   - component: {fileID: 5462980515630603993}
-  - component: {fileID: 3485834982963345512}
+  - component: {fileID: -5953402040181784965}
   m_Layer: 0
   m_Name: Fast Missile
   m_TagString: Missile
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 8
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -159,7 +159,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.8}
   m_EdgeRadius: 0
---- !u!114 &3485834982963345512
+--- !u!114 &-5953402040181784965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,8 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8954700268420667178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f92d2dcd6c109324b863374adadf8cff, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d85d9b661d907d4fbe32af24aad48e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _baseSpeed: 12
-  _bounces: 1
