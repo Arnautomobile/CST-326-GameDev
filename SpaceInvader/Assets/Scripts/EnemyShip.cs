@@ -24,6 +24,8 @@ public class EnemyShip : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.Paused) return;
+
         _timer += Time.deltaTime;
         if (_timer >= _firingTime)
         {
@@ -33,7 +35,7 @@ public class EnemyShip : MonoBehaviour
             _firingTime = _firingTime = (float)_rand.NextDouble() * (_maxFireTime - _minFireTime) + _minFireTime;
             _timer = 0;
         }
-
+        
         EnemyManager.Instance.TryEndReached(transform.position.y);
     }
 

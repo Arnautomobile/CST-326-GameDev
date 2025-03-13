@@ -35,10 +35,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.Paused) return;
+
         _direction = Input.GetAxis("Horizontal");
         _timer += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.A)) {
+        if (Input.GetKeyDown(KeyCode.LeftAlt)) {
             _isAuto = !_isAuto;
         }
 
@@ -68,6 +70,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.Paused) return;
+        
         float x = _rigidbody.position.x + _direction * _speed;
 
         if (x < _edgeLeft) {
