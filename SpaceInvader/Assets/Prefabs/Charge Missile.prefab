@@ -172,5 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseSpeed: 8
+  _shootParticle: {fileID: 6123368408546468380, guid: bd320bf1e45df6645bf4b2a5fbd0eb89, type: 3}
+  _explosionParticle: {fileID: 517082779927617786, guid: 37df24c8704b4a94bac45edd824b8bae, type: 3}
   _maxSpeed: 16
   _maxPower: 4

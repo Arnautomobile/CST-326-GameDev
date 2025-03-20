@@ -3,6 +3,8 @@ using UnityEngine;
 public abstract class MissileScript : MonoBehaviour
 {
     [SerializeField] protected float _baseSpeed;
+    [SerializeField] private GameObject _shootParticle;
+    [SerializeField] private GameObject _explosionParticle;
 
     protected Rigidbody2D _rigidbody;
     protected Vector2 _direction = Vector2.zero;
@@ -13,6 +15,8 @@ public abstract class MissileScript : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        GameObject particle = Instantiate(_shootParticle, transform.position, Quaternion.identity);
+        Destroy(particle, 5);
     }
 
     protected void FixedUpdate()
@@ -42,6 +46,9 @@ public abstract class MissileScript : MonoBehaviour
         else {
             return;
         }
+
+        GameObject particle = Instantiate(_explosionParticle, transform.position, Quaternion.identity);
+        Destroy(particle, 5);
 
         Explode();
     }
