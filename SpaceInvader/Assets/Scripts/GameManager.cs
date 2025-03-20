@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
+
+
+// implement overheating
+// fix text mesh pro shadow
+// finish menus and info text
+// add settings and option menu
+// animate with scale
+// create bomber
+
+
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -11,6 +22,7 @@ public class GameManager : MonoBehaviour
     public bool Paused { get; private set; }
     public float EnemyMovePeriod { get; private set; }
 
+    [SerializeField] private AudioClip _music;
 
     [Header("Scene names")]
     [SerializeField] private string _startScene;
@@ -25,6 +37,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _enemyAcceleration;
     
     private TextMeshProUGUI[] _textsUI;
+    private AudioSource _musicSource;
     private int _livesLeft;
     private int _score;
 
@@ -46,6 +59,11 @@ public class GameManager : MonoBehaviour
         EnemyMovePeriod = _baseEnemyMovePeriod;
         _livesLeft = _startingLives;
         _score = 0;
+
+        _musicSource = GetComponent<AudioSource>();
+        _musicSource.clip = _music;
+        _musicSource.Play();
+        
         Pause(true);
     }
 
@@ -90,6 +108,7 @@ public class GameManager : MonoBehaviour
     {
         _livesLeft--;
         _textsUI[2].text = _livesLeft.ToString();
+        Player.GetComponent<PlayerController>().Hit();
 
         if (_livesLeft <= 0) {
             EndGame(false);

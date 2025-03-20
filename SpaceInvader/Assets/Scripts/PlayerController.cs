@@ -6,7 +6,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject _missile;
+    [SerializeField] private AudioClip _firingSound;
+    [SerializeField] private AudioClip _explosionSound;
 
+    
     [Header("Movement settings")]
     [SerializeField] private float _speed;
     [SerializeField] private float _height;
@@ -21,56 +24,85 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _resetSpeed;
 
     private Rigidbody2D _rigidbody;
+    private AudioSource _audioSource;
+    private Animator _animator;
     private float _direction = 0;
     private float _firingTime = 0;
-    private float _timer = 0;
+    private float _fireTimer = 0;
+    private string _currentState;
+
+    private const string IDLE = "PlayerIdle";
+    private const string SHOOT = "PlayerShoot";
+    private const string LEFT = "PlayerLeft";
+    private const string RIGHT = "PlayerRight";
 
 
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
+
         transform.position = new Vector2(0,_height);
+        _currentState = IDLE;
     }
 
 
     void Update()
     {
-        if (GameManager.Instance.Paused) return;
+        if (GameManager.Instance.Paused) {
+            ChangeAnim(IDLE);
+            return;
+        }
 
         _direction = Input.GetAxis("Horizontal");
-        _timer += Time.deltaTime;
+        _fireTimer += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt)) {
+        if (_fireTimer > 0.5)
+        {
+            if (_direction < 0) {
+                ChangeAnim(LEFT);
+            }
+            else if (_direction > 0) {
+                ChangeAnim(RIGHT);
+            }
+            else {
+                ChangeAnim(IDLE);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.A)) {
             _isAuto = !_isAuto;
         }
 
-        if (_isAuto) {
-            if ((Input.GetButtonDown("Fire") || Input.GetButton("Fire")) && _timer > _fireRate) {
+        if (_isAuto)
+        {
+            if ((Input.GetButtonDown("Fire") || Input.GetButton("Fire")) && _fireTimer > _fireRate) {
                 Fire(0);
-                _timer = 0;
+                _fireTimer = 0;
             }
         }
-        else {
+        else
+        {
             if (Input.GetButtonDown("Fire")) {
                 _firingTime = 0;
             }
             else if (Input.GetButton("Fire")) {
                 _firingTime += Time.deltaTime;
             }
-            else if (Input.GetButtonUp("Fire") && _timer > _chargeTime/_resetSpeed) {
+            else if (Input.GetButtonUp("Fire") && _fireTimer > _chargeTime/_resetSpeed) {
                 if (_firingTime > _chargeTime)
                     _firingTime = _chargeTime;
 
-                _timer = 0;
+                _fireTimer = 0;
                 Fire(_firingTime/_chargeTime);
             }
         }
     }
     
-
     void FixedUpdate()
     {
-        if (GameManager.Instance.Paused) return;
+        if (GameManager.Instance.Paused || _direction == 0) return;
         
         float x = _rigidbody.position.x + _direction * _speed;
 
@@ -90,5 +122,21 @@ public class PlayerController : MonoBehaviour
     {
         GameObject missile = Instantiate(_missile, transform.position + Vector3.up, Quaternion.identity);
         missile.GetComponent<ChargeMissile>().Setup(Vector2.up, false, chargeFactor);
+        _audioSource.PlayOneShot(_firingSound);
+        ChangeAnim(SHOOT);
+    }
+
+    private void ChangeAnim(string newState)
+    {
+        if (newState != _currentState) {
+            _currentState = newState;
+            _animator.Play(newState);
+        }
+    }
+
+
+    public void Hit()
+    {
+        _audioSource.PlayOneShot(_explosionSound);
     }
 }
