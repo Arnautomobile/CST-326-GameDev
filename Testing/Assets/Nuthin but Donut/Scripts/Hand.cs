@@ -20,6 +20,6 @@ public class Hand : MonoBehaviour
     {
         ball.transform.position = gameObject.transform.position;
         rb.useGravity = false;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 }
